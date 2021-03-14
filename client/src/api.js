@@ -1,3 +1,11 @@
+function fail() {
+  return Math.floor(Math.random() * (5 - 1)) === 3;
+}
+
+function generateId() {
+  return Math.random().toString(36).substring(2);
+}
+
 export const API = {
   todos: [
     {
@@ -16,6 +24,7 @@ export const API = {
       complete: true,
     },
   ],
+
   fetchTodos() {
     return new Promise((res, rej) => {
       setTimeout(function () {
@@ -61,11 +70,3 @@ export const API = {
     });
   },
 };
-
-function fail() {
-  return Math.floor(Math.random() * (5 - 1)) === 3;
-}
-
-function generateId() {
-  return Math.random().toString(36).substring(2);
-}
