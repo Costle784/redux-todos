@@ -1,10 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { API } from './api';
+import App from './components/App';
+import reducer from './reducers/index';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+
+// Middleware - allows us to hook into redux lifecycle after an action is dispatched but before action reaches reducer
+const store = createStore(reducer, applyMiddleware(ReduxThunk));
 
 const app = document.getElementById('app');
-function App() {
-  return <h1>Hello World</h1>;
-}
 
-ReactDOM.render(<App />, app);
+// Provider gives application access to Redux store
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  app
+);

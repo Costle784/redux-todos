@@ -27,9 +27,9 @@ export const API = {
 
   fetchTodos() {
     return new Promise((res, rej) => {
-      setTimeout(function () {
-        res(todos);
-      }, 2000);
+      setTimeout(() => {
+        res(this.todos);
+      }, 3000);
     });
   },
 
@@ -41,7 +41,7 @@ export const API = {
           name: name,
           complete: false,
         };
-        todos = todos.concat([todo]);
+        this.todos = this.todos.concat([todo]);
         fail() ? rej(todo) : res(todo);
       }, 300);
     });

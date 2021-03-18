@@ -1,8 +1,7 @@
-import API from '../api';
+import { API } from '../api';
 
 export const ADD_TODO = 'ADD_TODO';
-export const REMOVE_TODO = 'REMOVE_TODO';
-export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const RECEIVE_DATA = 'RECEIVE_DATA';
 
 function addTodo(todo) {
   return {
@@ -11,17 +10,21 @@ function addTodo(todo) {
   };
 }
 
-function removeTodo(id) {
+function receiveDataAction(todos) {
   return {
-    type: REMOVE_TODO,
-    id,
+    type: RECEIVE_DATA,
+    todos,
   };
 }
 
-function toggleTodo(id) {
-  return {
-    type: TOGGLE_TODO,
-    id,
+// Redux thunk middleware. If what's being passed to dispatch is a function, invoke that function, passing it dispatch.
+// Otherwise dispatch object to reducer as usual.
+export function handleInitialData() {
+  return (dispatch) => {
+    return API.fetchTodos().then((todos) => {
+      console.log(todos);
+      dispatch(receiveDataAction(todos));
+    });
   };
 }
 
@@ -33,25 +36,5 @@ export function handleAddTodo(name, cb) {
         cb();
       })
       .catch(() => alert('There was an error. Try again.'));
-  };
-}
-
-export function handleDeleteTodo(todo) {
-  return (dispatch) => {
-    dispatch(removeTodo(todo.id));
-    return API.deleteTodo(todo.id).catch(() => {
-      dispatch(addTodo(todo));
-      alert('An error occurred. Try again.');
-    });
-  };
-}
-
-export function handleToggle(id) {
-  return (dispatch) => {
-    dispatch(toggleTodo(id));
-    return API.saveTodoToggle(id).catch(() => {
-      dispatch(toggleTodo(id));
-      alert('An error occurred. Try again.');
-    });
   };
 }
