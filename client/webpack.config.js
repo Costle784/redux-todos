@@ -31,7 +31,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
 };

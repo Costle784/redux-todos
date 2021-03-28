@@ -2,23 +2,24 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ConnectedTodos from './Todos';
 import { handleInitialData } from '../actions/todos';
+// import Test from './Test';
 
 class App extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(handleInitialData());
-  }
+    componentDidMount() {
+        this.props.dispatch(handleInitialData());
+    }
 
-  render() {
-    const { loading } = this.props;
-    return loading ? <h3>Loading...</h3> : <ConnectedTodos />;
-  }
+    render() {
+        const { loading } = this.props;
+        return <>{loading ? <h3>Loading...</h3> : <ConnectedTodos />}</>;
+    }
 }
 
 // for each 'connected' component
-// connect invokes store.getState() under the hood and invokes callback
-// connect provides dispatch via prop (<App dispatch={store.dispatch} />) AND specific slice of state provided in callback (loading in this case)
+// connect invokes store.getState() under the hood, invokes callback passed to connect specifying slice to be provided to component
+// connect provides dispatch via prop (<App dispatch={store.dispatch} />)
 export default connect((state) => ({
-  loading: state.loading,
+    loading: state.loading,
 }))(App);
 
 // Redux library code for reference
