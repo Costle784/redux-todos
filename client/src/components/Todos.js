@@ -1,13 +1,18 @@
 import React from 'react';
 import List from './List';
 import { connect } from 'react-redux';
-import { handleAddTodo, handleRemoveTodo } from '../actions/todos';
+import {
+    handleAddTodo,
+    handleRemoveTodo,
+    handleUpdateTodo,
+} from '../actions/todos';
 
 class Todos extends React.Component {
     constructor(props) {
         super(props);
         this.addTodo = this.addTodo.bind(this);
         this.removeTodo = this.removeTodo.bind(this);
+        this.toggleTodo = this.toggleTodo.bind(this);
     }
     addTodo(e) {
         e.preventDefault();
@@ -18,6 +23,12 @@ class Todos extends React.Component {
 
     removeTodo(todo) {
         this.props.dispatch(handleRemoveTodo(todo));
+    }
+
+    toggleTodo(todo) {
+        const updated = JSON.parse(JSON.stringify(todo));
+        updated.complete = !todo.complete;
+        this.props.dispatch(handleUpdateTodo(todo, updated));
     }
 
     render() {
@@ -35,7 +46,7 @@ class Todos extends React.Component {
                 <List
                     items={this.props.todos}
                     remove={this.removeTodo}
-                    // remove={() => this.removeTodo(todo)}
+                    toggle={this.toggleTodo}
                 />
             </div>
         );

@@ -56,16 +56,13 @@ export const API = {
         });
     },
 
-    saveTodoToggle(id) {
+    updateTodo(updated) {
         return new Promise((res, rej) => {
             setTimeout(() => {
-                todos = todos.map((todo) =>
-                    todo.id !== id
-                        ? todo
-                        : Object.assign({}, todo, { complete: !todo.complete })
+                this.todos = this.todos.map((todo) =>
+                    todo.id !== updated.id ? todo : { ...todo, ...updated }
                 );
-
-                fail() ? rej() : res(todos);
+                fail() ? rej() : res(this.todos);
             }, 300);
         });
     },

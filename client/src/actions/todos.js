@@ -3,6 +3,7 @@ import { API } from '../api';
 export const ADD_TODO = 'ADD_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
 export const RECEIVE_DATA = 'RECEIVE_DATA';
+export const UPDATE_TODO = 'UPDATE_TODO';
 
 function addTodo(todo) {
     return {
@@ -22,6 +23,13 @@ function receiveDataAction(todos) {
     return {
         type: RECEIVE_DATA,
         todos,
+    };
+}
+
+function updateTodoAction(todo) {
+    return {
+        type: UPDATE_TODO,
+        todo,
     };
 }
 
@@ -52,6 +60,16 @@ export function handleRemoveTodo(todo) {
         return API.deleteTodo(todo.id).catch(() => {
             alert('There was an error. Try again.');
             dispatch(addTodo(todo));
+        });
+    };
+}
+
+export function handleUpdateTodo(todo, updated) {
+    return (dispatch) => {
+        dispatch(updateTodoAction(updated));
+        return API.updateTodo(updated).catch(() => {
+            alert('There was an error. Try again.');
+            dispatch(updateTodoAction(todo));
         });
     };
 }
