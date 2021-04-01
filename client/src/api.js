@@ -43,7 +43,7 @@ export const API = {
                 };
                 this.todos = this.todos.concat([todo]);
                 fail() ? rej(todo) : res(todo);
-            }, 300);
+            }, 800);
         });
     },
 

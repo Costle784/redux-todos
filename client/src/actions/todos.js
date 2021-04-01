@@ -1,4 +1,5 @@
 import { API } from '../api';
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
 export const ADD_TODO = 'ADD_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
@@ -37,7 +38,9 @@ function updateTodoAction(todo) {
 // Otherwise dispatch object to reducer as usual.
 export function handleInitialData() {
     return (dispatch) => {
+        dispatch(showLoading());
         return API.fetchTodos().then((todos) => {
+            dispatch(hideLoading());
             dispatch(receiveDataAction(todos));
         });
     };
@@ -45,12 +48,18 @@ export function handleInitialData() {
 
 export function handleAddTodo(name, cb) {
     return (dispatch) => {
+        dispatch(showLoading());
+        console.log('here');
         return API.saveTodo(name)
             .then((todo) => {
+                dispatch(hideLoading());
                 dispatch(addTodo(todo));
                 cb();
             })
-            .catch(() => alert('There was an error. Try again.'));
+            .catch(() => {
+                dispatch(hideLoading());
+                alert('There was an error. Try again.');
+            });
     };
 }
 

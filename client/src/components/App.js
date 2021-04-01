@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ConnectedTodos from './Todos';
 import { handleInitialData } from '../actions/todos';
+import LoadingBar from 'react-redux-loading-bar';
 // import Test from './Test';
 
 class App extends React.Component {
@@ -11,7 +12,14 @@ class App extends React.Component {
 
     render() {
         const { loading } = this.props;
-        return <>{loading ? <h3>Loading...</h3> : <ConnectedTodos />}</>;
+        return (
+            <>
+                <header>
+                    <LoadingBar />
+                </header>
+                {!loading && <ConnectedTodos />}
+            </>
+        );
     }
 }
 
